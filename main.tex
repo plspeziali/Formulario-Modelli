@@ -93,15 +93,54 @@ applicando le due tecniche seguenti ripetutamente:
 \end{textbox}
 
 
+\begin{textbox}{Myhill-Nerode}
+\lipsum[1]
+
+\end{textbox}
+
+\begin{textbox}{Forma ridotta}
+Una grammatica G CF è in forma ridotta se:
+\begin{itemize}[leftmargin=*]
+    \item G non contiene \(\varepsilon\)-produzioni
+    se non sull’assioma, ed in tal caso l’assioma non
+    compare a destra di nessuna produzione;
+    \item G non contiene simboli inutili, cioè non fecondi o non generabili;
+    \item G non contiene produzioni unitarie\\(cioè del tipo \(A\,\rightarrow\,B\)).
+\end{itemize}
+
+\end{textbox}
+
+\begin{textbox}{Forma normale di Chomsky (CNF)}
+Una grammatica G CF è in CNF se tutte le sue produzioni sono del tipo \(A\,\rightarrow\,BC\) o \(A\,\rightarrow\,a\).\\
+Per arrivarci si porta G in forma ridotta e si sostituisce ogni terminale \(a\) con un non terminale \(X_a\) in tutte le produzioni
+in cui compare \(a\) ed si introduce la produzione \(X_a\,\rightarrow\,a\)
+(la forma ottenuta a questo punto si chiama \textbf{quasi CFN}).\\
+Infine si sotituisce ricorsivamente ogni produzione del tipo:\\
+\(A\,\rightarrow\,BC\alpha\) con le seguenti:
+\(A\,\rightarrow\,BD\), \(D\,\rightarrow\,C\alpha\) dove D è un nuovo non terminale.
+\end{textbox}
 
 
+\begin{textbox}{Forma normale di Greibach (GNF)}
+Una grammatica G CF è in GNF se tutte le sue produzioni sono del tipo \(A\,\rightarrow\,a\beta\), dove \(\beta\) è una sequenza (eventualmente vuota) di non terminali e \(a\)  è un simbolo terminale.\\
+\end{textbox}
 
-
-
+\begin{textbox}{Pumping Lemma per L CF}
+Se L è un linguaggio CF allora \\
+\(\exists \, n \, > \, 0\) tale che \(\forall \, z \, \in \, L \) e
+\(|z| \, \geq \, n\),\\si ha che
+\(\exists \, u \, ,v \, ,w \, ,x \, ,y\) tali che:
+\begin{enumerate}[leftmargin=*]
+    \item \(z\, =\, uvwxy\)
+    \item \(|vwx|\, \leq\,  n\)
+    \item \(|vx|\, \geq\,  1\)
+    \item \(uv^iwx^iy\,\in\,L,\,\forall\,i\,\geq\,0\)
+\end{enumerate}
+\end{textbox}
 
 
 %--------------------------------------------------------------
-\section{Tools}
+\section{Macchine di Turing}
 
 
 
