@@ -3,6 +3,16 @@
 
 \usepackage[landscape,margin=1cm]{geometry}
 \usepackage[italian]{babel}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\usepackage{xparse}
+
+\NewDocumentCommand{\codeword}{v}{%
+\texttt{\textcolor{black}{#1}}%
+}
+
+\lstset{language=C,keywordstyle={\bfseries \color{black}}}
 
 
 % colour themes to come. KnitR?
@@ -122,7 +132,7 @@ Infine si sotituisce ricorsivamente ogni produzione del tipo:\\
 
 
 \begin{textbox}{Forma normale di Greibach (GNF)}
-Una grammatica G CF è in GNF se tutte le sue produzioni sono del tipo \(A\,\rightarrow\,a\beta\), dove \(\beta\) è una sequenza (eventualmente vuota) di non terminali e \(a\)  è un simbolo terminale.\\
+Una grammatica G CF è in GNF se tutte le sue produzioni sono del tipo \(A\,\rightarrow\,a\beta\), dove \(\beta\) è una sequenza (eventualmente vuota) di non terminali e \(a\)  è un simbolo terminale.
 \end{textbox}
 
 \begin{textbox}{Pumping Lemma per L CF}
@@ -140,89 +150,53 @@ Se L è un linguaggio CF allora \\
 
 
 %--------------------------------------------------------------
-\section{Macchine di Turing}
+\section{Macchine a Registri}
 
-
-
-\begin{textbox}{Lorem Ipsum}
-test  \sep test \sep test \sep test
-
-\bigskip
-
-\green{Visualize}
-\begin{enumerate}
-\item \textbf{present} your data
-\item \textbf{analyze} the information
-\item \textbf{explore} the findings
-\end{enumerate}
-
+\begin{textbox}{Istruzioni di trasferimento}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{LOAD} <op>\quad(\codeword{R[0] := <op>});
+    \item \textbf{STORE} <op>\quad(\codeword{R[<op>] := R[0]}).
+\end{itemize}
 \end{textbox}
 
-
-\begin{textbox}{Voyant Tools}
- \href{https://voyant-tools.org/}{Voyant Tools} \sep \href{https://voyant-tools.org/}{Voyant Tools}
-
-\includegraphics[width=\textwidth]{voyant.png}
+\begin{textbox}{Istruzioni aritmetiche}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{ADD} <op>\quad(\codeword{R[0] := R[0] + <op>});
+    \item \textbf{ADD} <op>\quad(\codeword{R[0] := R[0] - <op>});
+    \item \textbf{MULT} <op>\quad(\codeword{R[0] := R[0] * <op>});
+    \item \textbf{DIV} <op>\quad(\codeword{R[0] := R[0] / <op>}).
+\end{itemize}
 \end{textbox}
 
-
-
-
-\begin{textbox}{Project Gutenberg Texts}
-\begin{tabular}{r|p{0.8\textwidth}}\scriptsize
-    84 & \href{http://www.gutenberg.org/ebooks/84}{Frankenstein; Or, The Modern Prometheus by Mary Wollstonecraft Shelley} \\
-    6087 & \href{https://www.gutenberg.org/ebooks/6087}{The Vampyre; a Tale by John William Polidori} \\
-    696 & \href{https://www.gutenberg.org/ebooks/696}{The Castle of Otranto by Horace Walpole} \\
-    42 & \href{https://www.gutenberg.org/ebooks/42}{The Strange Case of Dr. Jekyll and Mr. Hyde by Robert Louis Stevenson}
-\end{tabular}
-
+\begin{textbox}{Istruzioni di I/O}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{READ} <op>\quad(\codeword{R[<op>] := IN});
+    \item \textbf{WRITE} <op>\quad(\codeword{OUT := <op>}).
+\end{itemize}
 \end{textbox}
 
-
-
-
-
-\begin{textbox}{Key concepts}
-\red{Bag-of-words (BOW)}
-
-
-\green{\emph{Zipf's Law}}
-
-\mycommand{_&§!$§/()$}{code}
-\mycommand{shutdown -h now}{to shutdown}
-
+\begin{textbox}{Istruzioni di salto e di controllo}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{JUMP} <et>\quad(\codeword{CI := <et>});
+    \item \textbf{JGTZ} <et>\quad(\codeword{if (R[0] > 0) then CI := <et> else CI := CI + 1});
+    \item \textbf{JZERO} <et>\quad(\codeword{if (R[0] = 0) then CI := <et> else CI := CI + 1});
+    \item \textbf{HALT}\quad(\codeword{fine, il calcolo si arresta}).
+\end{itemize}
 \end{textbox}
 
+\begin{textbox}{Operandi ed etichette}
+Ogni operando \codeword{<op>} può avere una delle forme seguenti:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{n}: \codeword{<op>} indica l’intero memorizzato nel registro n;
+    \item \textbf{(n)}: \codeword{<op>} indica l’intero memorizzato nel registro indirizzato dal
+    registro n;
+    \item \textbf{\#n}: \codeword{<op>} indica il numero n.
+\end{itemize}
+Ogni etichetta \codeword{<et>} ha la forma \textbf{n}, ed indica il numero intero n.
+\end{textbox}
 
-%--------------------------------------------------------------
-\section{Programming}
+\section{Complessità}
 
-\subsection{Code boxes}
-
-
-% first argument: minted programming language name, for example.. css, c, cpp, etc.
-\begin{codebox}{r}{Code box using R}
-# Install
-install.packages("tm")  # for text mining
-
-# Load
-library("tm")
-
-# text <- readLines(file.choose())
-# Read the text file from internet
-filePath <- "http://www.internet.com/text.txt"
-text <- readLines(filePath)
-
-\end{codebox}
-
-
-% first argument: minted programming language name, for example.. css, c, cpp, etc.
-\begin{codebox}{cpp}{Code box using C++}
-for (auto element : vector) 
-{
-    sum += element;
-}
-\end{codebox}
 
 \newpage
 \section{Smaller Subboxes}
@@ -349,8 +323,6 @@ more text
 
 
 %---------------------------------------------
-\AtNextBibliography{\footnotesize}
-\printbibliography  
 \end{multicols}
 
 \end{document}
