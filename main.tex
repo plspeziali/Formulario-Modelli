@@ -5,6 +5,7 @@
 \usepackage[italian]{babel}
 \usepackage{xcolor}
 \usepackage{listings}
+\usepackage{amsfonts} 
 
 \usepackage{xparse}
 
@@ -19,7 +20,7 @@
 
 %-------------------------
 
-\title{Cheatsheet Modelli di Calcolo e Algoritmi Avanzati}
+\title{Formulario di Modelli di Calcolo e Algoritmi Avanzati}
 \author{Paolo Speziali}
 \date{Giugno 2022}
 \input{cheatsheet-template.tex}
@@ -103,7 +104,7 @@ applicando le due tecniche seguenti ripetutamente:
 \end{textbox}
 
 
-\begin{textbox}{Myhill-Nerode}
+\begin{textbox}{Dimostrazione regolarità linguaggio}
 \lipsum[1]
 
 \end{textbox}
@@ -162,7 +163,7 @@ Se L è un linguaggio CF allora \\
 \begin{textbox}{Istruzioni aritmetiche}
 \begin{itemize}[leftmargin=*]
     \item \textbf{ADD} <op>\quad(\codeword{R[0] := R[0] + <op>});
-    \item \textbf{ADD} <op>\quad(\codeword{R[0] := R[0] - <op>});
+    \item \textbf{SUB} <op>\quad(\codeword{R[0] := R[0] - <op>});
     \item \textbf{MULT} <op>\quad(\codeword{R[0] := R[0] * <op>});
     \item \textbf{DIV} <op>\quad(\codeword{R[0] := R[0] / <op>}).
 \end{itemize}
@@ -197,130 +198,120 @@ Ogni etichetta \codeword{<et>} ha la forma \textbf{n}, ed indica il numero inter
 
 \section{Complessità}
 
+\begin{textbox}{Tipologie di problemi}
+Per definire le varie tipologie di problemi useremo degli esempi che
+partono dal concetto di \textbf{Clique}.\\
 
-\newpage
-\section{Smaller Subboxes}
-\subsection{Subboxes}
-%---------------------------------------------
-\begin{multibox}{2} % number of boxes in a row
-\begin{subbox}{subbox}{test}
-\tiny
+\begin{textbox}{Problemi di decisione}
+Un problema di decisione \(P_D\) è definito da:
+\begin{itemize}[leftmargin=*]
+    \item Un insieme di istanze \(I_{P_D}\);
+    \item Un predicato \(\pi\): \(I_{P_D} \rightarrow\) \{vero, falso\}.
+\end{itemize}
 
-
-\bg{alert}{white}{test} 
-\bggreen{test}\\
-
-\end{subbox}
-\begin{subbox}{customcolor}{test}
-\scriptsize
-
-
-\bgupper{w3schools}{black}{test}\\
-\tiny
-tiny font
-
-\mycommand{$\lxor$}{XOR}
-\mycommand{$\lor$}{OR}
-\end{subbox}
-\end{multibox}
-
-
-
-
-%---------------------------------------------
-\begin{multibox}{2} % number of boxes in a row
-\begin{subbox}{subbox}{ Infos}
-
-\bg{alert}{white}{bla}\\
-\bgupper{w3schools}{black}{XX}\\
-
-\end{subbox}
-\begin{subbox}{customcolor}{ Infos}
-
-\end{subbox}
-\end{multibox}
-
-
-\begin{textbox}{Subboxes}
-%---------------------------------------------
-\begin{multibox}{2} % number of boxes in a row
-\begin{subbox}{subbox}{test}
-
-\red{test} 
-\bggreen{test}
-\href{https://latex-ninja.com}{Link}
-\end{subbox}
-\begin{subbox}{customcolor}{test}
-\scriptsize
-
-
-\bggreen{test}
-\tiny
-super small font
-
-\mycommand{$\land$}{AND $\land$}
-\mycommand{$\lor$}{OR $\lor$}
-\end{subbox}
-\end{multibox}
-
-%---------------------------------------------
-\begin{multibox}{2} % number of boxes in a row
-\begin{subbox}{subbox}{ Info}
-
-\red{bla}\\
-\bggreen{XX}\\
-
-\end{subbox}
-\begin{subbox}{customcolor}{Info}
-
-\end{subbox}
-\end{multibox}
-\end{textbox}
-
-
-%--------------------------------------------------------------
-
-\begin{textbox}{bla}
-
-
-\bgupper{w3schools}{black}{test}\\
-\bg{alert}{white}{bla}
-\begin{enumerate}
-    \item \emph{bla}: bla.
-    \item bla.
-\end{enumerate}
-
-%---------------------------------------------
-\begin{multibox}{3} % number of boxes in a row
-\begin{subbox}{subbox}{test}
-info
-\end{subbox}
-\begin{subbox}{customcolor}{test}
-$p \to q$
-\mycommand{CTRL+C}{copy}
-\end{subbox}
-\begin{subbox}{subbox}{ Infos}
-bla \\
-more text
-\end{subbox}
-\end{multibox}
-
-%---------------------------------------------
-\begin{multibox}{3} % number of boxes in a row
-\begin{subbox}{subbox}{ Infos}
-info
-\end{subbox}
-\begin{subbox}{customcolor}{ Infos}
-$p \to q$
-\end{subbox}
-\begin{subbox}{subbox}{ Infos}
-bla \\
-more text
-\end{subbox}
-\end{multibox}
+\codeword{CLIQUE}\\
+\codeword{Istanza}: Grafo \(G\), intero \(K > 0\) \\
+\codeword{Predicato}: Esiste una clique di \(G\) di dimensione \(\geq\) K ?
 
 \end{textbox}
 
+\begin{textbox}{Problemi di ricerca}
+Un problema di decisione \(P_R\) è definito da:
+\begin{itemize}[leftmargin=*]
+    \item Un insieme di istanze \(I_{P_R}\);
+    \item Un insieme di soluzioni candidate  \(S_{P_R}\);
+    \item Una proprietà di ammissibilità che deve valere per ogni soluzione di una
+    data istanza.
+\end{itemize}
+
+\codeword{RICERCA CLIQUE}\\
+\codeword{Istanza}: Grafo \(G\), intero \(K > 0\) \\
+\codeword{Soluzione candidata}: Sottoinsieme \(V'\) di vertici \\
+\codeword{Ammissibilità}: \(V'\) è una clique di \(G\) di dimensione \(\geq\) K
+
+Un algoritmo che lo risolve prende in input una
+istanza \(x\) e restituisce (se esiste) un elemento di\\
+\(Sol(x)\) = \{ \(y\,\in\,S_{P_R}\) : \(y\) rispetta la proprietà di ammissibilità \}.
+
+\end{textbox}
+
+\end{textbox}
+
+\begin{textbox}{Tipologie di problemi}
+
+Ogni problema di ricerca \(P_R\) ha un problema di decisione associato \(P_D\).\\
+
+\begin{textbox}{Problemi di enumerazione}
+Un problema di decisione \(P_E\) è definito da:
+\begin{itemize}[leftmargin=*]
+    \item Un insieme di istanze \(I_{P_E}\);
+    \item Un insieme di soluzioni candidate  \(S_{P_E}\);
+    \item Una proprietà di ammissibilità.
+\end{itemize}
+Un algoritmo che lo risolve prende in input una istanza \(x\)  e
+restituisce la cardinalità dell’insieme \(Sol(x)\).
+\end{textbox}
+
+\begin{textbox}{Problemi di ottimizzazione}
+Un problema di decisione \(P_E\) è definito da:
+\begin{itemize}[leftmargin=*]
+    \item Un insieme di istanze \(I_{P_O}\), un insieme di soluzioni candidate  \(S{P_O}\), ed una proprietà di ammissibilità;
+    \item Una funzione di misura \\\(\mu:\,I_{P_O}\,\times S_{P_O}\,\rightarrow\,\mathbb{N} \)
+    definita solo sulle coppie \((x,y)\) tali che \(y\,\in\,Sol(x)\);
+    \item Un criterio di scelta \(c\,\in\,\)\{MIN, MAX\};
+\end{itemize}
+Un algoritmo che lo risolve prende
+una istanza \(x\) e restituisce \(y\) tale
+che,\\ \(\forall\,z\,\in\,Sol(x)\), \\
+\(m(x,y) \leq m(x,z)\) se \(c\) = MIN e \\
+\(m(x,y) \geq m(x,z)\) se \(c\) = MAX.\\
+\codeword{RICERCA CLIQUE}\\
+\codeword{Istanza}: Grafo \(G\)\\
+\codeword{Soluzione candidata}: Insieme \(V'\) di vertici \\
+\codeword{Ammissibilità}: \(V'\) è una clique di \(G\)\\
+\codeword{Misura}: \(|V'|\) \\
+\codeword{Criterio}: MAX
+\end{textbox}
+
+
+\end{textbox}
+
+
+%\begin{textbox}{Subboxes}
+%---------------------------------------------
+%\begin{multibox}{2} % number of boxes in a row
+%\begin{subbox}{subbox}{test}
+
+%\red{test} 
+%\bggreen{test}
+%\href{https://latex-ninja.com}{Link}
+%\end{subbox}
+%\begin{subbox}{customcolor}{test}
+%\scriptsize
+
+
+%\bggreen{test}
+%\tiny
+%super small font
+
+%\mycommand{$\land$}{AND $\land$}
+%\mycommand{$\lor$}{OR $\lor$}
+%\end{subbox}
+%\end{multibox}
+
+%---------------------------------------------
+%\begin{multibox}{2} % number of boxes in a row
+%\begin{subbox}{subbox}{ Info}
+%
+%\red{bla}\\
+%\bggreen{XX}\\
+
+%\end{subbox}
+%\begin{subbox}{customcolor}{Info}
+%
+%\end{subbox}
+%\end{multibox}
+%\end{textbox}
 
 %---------------------------------------------
 \end{multicols}
