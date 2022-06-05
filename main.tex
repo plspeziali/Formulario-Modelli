@@ -40,7 +40,7 @@
 \thispagestyle{empty}
 
 
-\section{Linguaggi e grammatiche}
+\section{Grammatiche}
 
 
 \begin{textbox}{Tipi di grammatiche}
@@ -71,87 +71,18 @@ terminale seguito da un non terminale\\
 
 \end{textbox}
 
-
-\begin{textbox}{Pumping Lemma per L. Regolari}
-Se L è un linguaggio regolare allora \\
-\(\exists \, n \, > \, 0\) tale che \(\forall \, z \, \in \, L \) e
-\(|z| \, \geq \, n\),\\si ha che
-\(\exists \, u \, ,v \, ,w\) tali che:
-\begin{enumerate}[leftmargin=*]
-    \item \(z\, =\, uvw\)
-    \item \(|uv|\, \leq\,  n\)
-    \item \(|v|\, \geq\,  1\)
-    \item \(uv^iw\,\in\,L,\,\forall\,i\,\geq\,0\)
-\end{enumerate}
-
-\end{textbox}
-
-\begin{textbox}{Da Gram. Reg. a Esp. Reg.}
-Dal sistema di equazioni lineari si ricava una espressione regolare
-applicando le due tecniche seguenti ripetutamente:
-\begin{itemize}[leftmargin=*]
-    \item \textbf{Sostituzione}: si può sostituire un simbolo non terminale con una espressione equivalente \\
-    (es. \(A\, aB\, +\, b,\, B\, =\, cA\,\Rightarrow \,  =\, acA\, +\, b)\)
-    \item \textbf{Eliminazione della ricorsione}: si può sostituire la prima equazione con la seconda\\
-    \(A\,=\,\alpha_1A\,+\,\alpha_2A\,+\,...\,+\
-    \alpha_nA\,+\,\beta_1\,+\,\beta_2\,+\,...\,+\
-    \beta_n\) \\
-    \(A\,=\,(\alpha_1\,+\,\alpha_2\,+\,...\,+\
-    \alpha_n\,)^\ast(\beta_1\,+\,\beta_2\,+\,...\,+\
-    \beta_n)\)
-\end{itemize}
-
-\end{textbox}
-
-
-\begin{textbox}{Dimostrazione regolarità linguaggio}
-\lipsum[1]
-
-\end{textbox}
-
-\begin{textbox}{Forma ridotta}
-Una grammatica G CF è in forma ridotta se:
-\begin{itemize}[leftmargin=*]
-    \item G non contiene \(\varepsilon\)-produzioni
-    se non sull’assioma, ed in tal caso l’assioma non
-    compare a destra di nessuna produzione;
-    \item G non contiene simboli inutili, cioè non fecondi o non generabili;
-    \item G non contiene produzioni unitarie\\(cioè del tipo \(A\,\rightarrow\,B\)).
-\end{itemize}
-
-\end{textbox}
-
-\begin{textbox}{Forma normale di Chomsky (CNF)}
-Una grammatica G CF è in CNF se tutte le sue produzioni sono del tipo \(A\,\rightarrow\,BC\) o \(A\,\rightarrow\,a\).\\
-Per arrivarci si porta G in forma ridotta e si sostituisce ogni terminale \(a\) con un non terminale \(X_a\) in tutte le produzioni
-in cui compare \(a\) ed si introduce la produzione \(X_a\,\rightarrow\,a\)
-(la forma ottenuta a questo punto si chiama \textbf{quasi CFN}).\\
-Infine si sotituisce ricorsivamente ogni produzione del tipo:\\
-\(A\,\rightarrow\,BC\alpha\) con le seguenti:
-\(A\,\rightarrow\,BD\), \(D\,\rightarrow\,C\alpha\) dove D è un nuovo non terminale.
-\end{textbox}
-
-
-\begin{textbox}{Forma normale di Greibach (GNF)}
-Una grammatica G CF è in GNF se tutte le sue produzioni sono del tipo \(A\,\rightarrow\,a\beta\), dove \(\beta\) è una sequenza (eventualmente vuota) di non terminali e \(a\)  è un simbolo terminale.
-\end{textbox}
-
-\begin{textbox}{Pumping Lemma per L CF}
-Se L è un linguaggio CF allora \\
-\(\exists \, n \, > \, 0\) tale che \(\forall \, z \, \in \, L \) e
-\(|z| \, \geq \, n\),\\si ha che
-\(\exists \, u \, ,v \, ,w \, ,x \, ,y\) tali che:
-\begin{enumerate}[leftmargin=*]
-    \item \(z\, =\, uvwxy\)
-    \item \(|vwx|\, \leq\,  n\)
-    \item \(|vx|\, \geq\,  1\)
-    \item \(uv^iwx^iy\,\in\,L,\,\forall\,i\,\geq\,0\)
-\end{enumerate}
-\end{textbox}
-
-
-%--------------------------------------------------------------
 \section{Macchine a Registri}
+
+\begin{textbox}{Operandi ed etichette}
+Ogni operando \codeword{<op>} può avere una delle forme seguenti:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{n}: \codeword{<op>} indica l’intero memorizzato nel registro n;
+    \item \textbf{(n)}: \codeword{<op>} indica l’intero memorizzato nel registro indirizzato dal
+    registro n;
+    \item \textbf{\#n}: \codeword{<op>} indica il numero n.
+\end{itemize}
+Ogni etichetta \codeword{<et>} ha la forma \textbf{n}, ed indica il numero intero n.
+\end{textbox}
 
 \begin{textbox}{Istruzioni di trasferimento}
 \begin{itemize}[leftmargin=*]
@@ -185,16 +116,95 @@ Se L è un linguaggio CF allora \\
 \end{itemize}
 \end{textbox}
 
-\begin{textbox}{Operandi ed etichette}
-Ogni operando \codeword{<op>} può avere una delle forme seguenti:
-\begin{itemize}[leftmargin=*]
-    \item \textbf{n}: \codeword{<op>} indica l’intero memorizzato nel registro n;
-    \item \textbf{(n)}: \codeword{<op>} indica l’intero memorizzato nel registro indirizzato dal
-    registro n;
-    \item \textbf{\#n}: \codeword{<op>} indica il numero n.
-\end{itemize}
-Ogni etichetta \codeword{<et>} ha la forma \textbf{n}, ed indica il numero intero n.
+\section{Linguaggi}
+
+\begin{textbox}{Pumping Lemma per L. Regolari}
+Se L è un linguaggio regolare allora \\
+\(\exists \, n \, > \, 0\) tale che \(\forall \, z \, \in \, L \) e
+\(|z| \, \geq \, n\),\\si ha che
+\(\exists \, u \, ,v \, ,w\) tali che:
+\begin{enumerate}[leftmargin=*]
+    \item \(z\, =\, uvw\)
+    \item \(|uv|\, \leq\,  n\)
+    \item \(|v|\, \geq\,  1\)
+    \item \(uv^iw\,\in\,L,\,\forall\,i\,\geq\,0\)
+\end{enumerate}
+
 \end{textbox}
+
+\begin{textbox}{Da Gram. Reg. a Esp. Reg.}
+Dal sistema di equazioni lineari si ricava una espressione regolare
+applicando le due tecniche seguenti ripetutamente:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Sostituzione}: si può sostituire un simbolo non terminale con una espressione equivalente \\
+    (es. \(A\, aB\, +\, b,\, B\, =\, cA\,\Rightarrow \,  =\, acA\, +\, b)\)
+    \item \textbf{Eliminazione della ricorsione}: si può sostituire la prima equazione con la seconda\\
+    \(A\,=\,\alpha_1A\,+\,\alpha_2A\,+\,...\,+\
+    \alpha_nA\,+\,\beta_1\,+\,\beta_2\,+\,...\,+\
+    \beta_n\) \\
+    \(A\,=\,(\alpha_1\,+\,\alpha_2\,+\,...\,+\
+    \alpha_n\,)^\ast(\beta_1\,+\,\beta_2\,+\,...\,+\
+    \beta_n)\)
+\end{itemize}
+
+\end{textbox}
+
+\begin{textbox}{Forma ridotta}
+Una grammatica G CF è in forma ridotta se:
+\begin{itemize}[leftmargin=*]
+    \item G non contiene \(\varepsilon\)-produzioni
+    se non sull’assioma, ed in tal caso l’assioma non
+    compare a destra di nessuna produzione;
+    \item G non contiene simboli inutili, cioè non fecondi o non generabili;
+    \item G non contiene produzioni unitarie\\(cioè del tipo \(A\,\rightarrow\,B\)).
+\end{itemize}
+
+\end{textbox}
+
+\begin{textbox}{Forma normale di Greibach (GNF)}
+Una grammatica G CF è in GNF se tutte le sue produzioni sono del tipo \(A\,\rightarrow\,a\beta\), dove \(\beta\) è una sequenza (eventualmente vuota) di non terminali e \(a\)  è un simbolo terminale.
+\end{textbox}
+
+\begin{textbox}{Forma normale di Chomsky (CNF)}
+Una grammatica G CF è in CNF se tutte le sue produzioni sono del tipo \(A\,\rightarrow\,BC\) o \(A\,\rightarrow\,a\).\\
+Per arrivarci si porta G in forma ridotta e si sostituisce ogni terminale \(a\) con un non terminale \(X_a\) in tutte le produzioni
+in cui compare \(a\) ed si introduce la produzione \(X_a\,\rightarrow\,a\)
+(la forma ottenuta a questo punto si chiama \textbf{quasi CFN}).\\
+Infine si sotituisce ricorsivamente ogni produzione del tipo:\\
+\(A\,\rightarrow\,BC\alpha\) con le seguenti:
+\(A\,\rightarrow\,BD\), \(D\,\rightarrow\,C\alpha\) dove D è un nuovo non terminale.
+\end{textbox}
+
+\begin{textbox}{Pumping Lemma per L CF}
+Se L è un linguaggio CF allora \\
+\(\exists \, n \, > \, 0\) tale che \(\forall \, z \, \in \, L \) e
+\(|z| \, \geq \, n\),\\si ha che
+\(\exists \, u \, ,v \, ,w \, ,x \, ,y\) tali che:
+\begin{enumerate}[leftmargin=*]
+    \item \(z\, =\, uvwxy\)
+    \item \(|vwx|\, \leq\,  n\)
+    \item \(|vx|\, \geq\,  1\)
+    \item \(uv^iwx^iy\,\in\,L,\,\forall\,i\,\geq\,0\)
+\end{enumerate}
+\end{textbox}
+
+%--------------------------------------------------------------
+
+\section{Trattabilità}
+
+\begin{textbox}{Problemi in NP}
+Dimostrare che un problema \(B\) appartiene ad NP:
+\begin{enumerate}[leftmargin=*]
+    \item Definire in cosa consiste l'insieme \(S\) delle \textbf{soluzioni candidate} di \(B\) e quale è la proprietà che ogni soluzione candidata deve possedere per essere una soluzione effettiva;
+    \item Definire uno \textbf{schema di codifica} delle soluzioni candidate di \(B\);
+    \item Mostrare che le codifiche delle soluzioni candidate hanno \textbf{taglia polinomiale} nell'input;
+    \item Definire un \textbf{algoritmo deterministico} che verifica in tempo polinomiale se una data soluzione candidata rispetta la proprietà richiesta.
+\end{enumerate}
+\end{textbox}
+
+
+%--------------------------------------------------------------
+
 
 \section{Complessità}
 
@@ -272,7 +282,6 @@ che,\\ \(\forall\,z\,\in\,Sol(x)\), \\
 \codeword{Misura}: \(|V'|\) \\
 \codeword{Criterio}: MAX
 \end{textbox}
-
 
 \end{textbox}
 
