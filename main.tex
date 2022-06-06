@@ -67,7 +67,7 @@ Detta anche \textbf{regolare}, ammette produzioni in cui
 il termine sinistro è formato da un solo non terminale
 e il termine destro o da un solo terminale o da un
 terminale seguito da un non terminale\\
-(es. \(aA\,\rightarrow\,b\,|\,aB\)).
+(es. \(A\,\rightarrow\,b\,|\,aB\)).
 
 \end{textbox}
 
@@ -286,6 +286,225 @@ che,\\ \(\forall\,z\,\in\,Sol(x)\), \\
 \end{textbox}
 
 
+%--------------------------------------------------------------
+
+
+\section{Complessità parametrica}
+
+\begin{textbox}{Problema parametrizzato}
+Si tratta di un linguaggio \(L \subseteq \Sigma^\ast \times \mathbb{N}\).
+Data un’istanza \((x,k) \in \Sigma^\ast \times \mathbb{N}\), \(k\) è
+il \textbf{parametro} del problema.
+
+\(L\) è detto Fixed-Parameter Tractable (\textbf{FPT}) se esiste una terna \((A,f,c)\) dove:
+\begin{itemize}[leftmargin=*]
+    \item \(f:\mathbb{N} \rightarrow \mathbb{N}\) è una funzione calcolabile;
+    \item \(c\) è una costante;
+    \item \(A\) è un algoritmo che decide se una data istanza \((x,k)\) appartiene ad \(L\) in un tempo limitato superiormente da \(f(k)\cdot|x|^c\).
+\end{itemize}
+
+\(L\) è detto Slice-Wise Polynomial (\textbf{XP}) se esiste una terna \((A,f,g)\) dove:
+\begin{itemize}[leftmargin=*]
+    \item \(f, g:\mathbb{N} \rightarrow \mathbb{N}\) sono due funzioni calcolabili;
+    \item \(A\) è un algoritmo che decide se una data istanza \((x,k)\) appartiene ad \(L\) in un tempo limitato superiormente da \(f(k)\cdot|x|^{g(k)}\).
+\end{itemize}
+\end{textbox}
+
+\begin{textbox}{Kernelizzazione}
+Approccio sistematico allo studio di
+algoritmi di preprocessing che lavorano in
+tempo polinomiale.
+
+Sia  \(Q \subseteq \Sigma^\ast \times \mathbb{N}\) un problema parametrizzato, diciamo che due
+istanze \((x,k)\) e \((x',k')\) sono equivalenti se  \((x,k)\in Q \Leftrightarrow (x',k')\in Q \).
+
+Una funzione \(\Phi: \Sigma^\ast \times \mathbb{N} \rightarrow \Sigma^\ast \times \mathbb{N}\) è una \textbf{regola di riduzione} per \(Q\) se:
+\begin{itemize}[leftmargin=*]
+    \item \(\Phi\) mappa ciascuna istanza \((x,k)\) in una equivalente \((x',k')\), ovvero è \textbf{safe};
+    \item \(\Phi\) è calcolabile in tempo polinomiale nella dimensione di \((x,k)\).
+\end{itemize}
+
+La \textbf{dimensione dell’output} di \(A\) è
+una funzione \(size_A(k):\mathbb{N} \rightarrow \mathbb{N}\cup\{\infty\}\)
+definita come segue:\\
+\(size_A(k) = sup\{|x'|+k': (x',k') = A(x,k), x \in \Sigma^\ast\}\).
+
+Un \textbf{algoritmo di kernelizzazione} \(A\) per il problema \(Q\) è un algoritmo di
+preelaborazione tale che \(size_A(k) \leq g(k)\), per una qualche
+funzione calcolabile \(g:\mathbb{N} \rightarrow \mathbb{N}\).
+Se la funzione g è \textbf{polinomiale} (\textbf{lineare}) in k, allora diciamo che Q ammette un
+\textbf{kernel polinomiale} (\textbf{lineare}).
+
+Un problema parametrizzato Q \textbf{è FPT} se e solo se
+\textbf{ammette un algoritmo di kernelizzazione}.
+\end{textbox}
+
+\begin{textbox}{Matching}
+Dato un grafo bipartito \(G=(X\cup Y,E)\), un \textbf{matching} di \(X\) in \(Y\) è un
+insieme \(M\subseteq E\) di archi indipendenti tale che ciascun vertice di \(X\) è
+adiacente ad un arco di \(M\).
+
+Per un qualsiasi sottoinsieme \(C\subseteq X\), sia \(N(C)\) l’insieme di vertici in
+\(Y\) adiacenti ai vertici in \(C\).
+
+I seguenti teoremi rappresentano strumenti fondamentali
+nell’ambito della kernelizzazione:
+\begin{itemize}[leftmargin=*]
+    \item La \textbf{dimensione minima di un vertex cover} in un grafo bipartito è pari alla \textbf{dimensione del massimo matching}.
+    \item Sia \(G\) un grafo bipartito. Allora \(G\) \textbf{contiene un matching} di \(X\) in \(Y\) se e solo se \(|N(C)|\geq |C|\) per ogni sottoinsieme \(C\subseteq X\).
+    \item Sia \(G\) un grafo bipartito. Possiamo trovare un matching di dimensione massima
+    (e un vertex cover di dimensione minima) in PTIME. 
+    
+    Inoltre, in tempo polinomiale, possiamo trovare o un matching di 
+    \(X\) in \(Y\), oppure un insieme minimale non vuoto \(C\subseteq X\) tale che \(|N(C)|<|C|\).
+\end{itemize}
+\end{textbox}
+
+\begin{textbox}{Crown Decomposition}
+Una crown decomposition di un grafo \(G=(V,E)\) è una partizione di
+\(V\) in tre insiemi \((C,H,R)\) tale che:
+\begin{itemize}[leftmargin=*]
+    \item \(C\) è un \textbf{indipendent set non vuoto};
+    \item Nessun vertice di \(C\) è connesso a un vertice di R, ovvero \textbf{H separa C e R};
+    \item \(E\) \textbf{contiene un matching} di \(H\) in \(C\). 
+\end{itemize}
+\vspace{-15pt}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{crown.png}
+\end{figure}
+\vspace{-15pt}
+Sia \(G\) un grafo senza vertici isolati e con
+almeno \(3k+1\) vertici. Allora \(G\) contiene
+un \textbf{matching} di dimensione \(k+1\) oppure
+una \textbf{crown decomposition}.
+Inoltre, una delle due strutture può essere calcolata
+in tempo polinomiale.
+\end{textbox}
+
+\begin{textbox}{Teoremi di Robertson-Seymour}
+Un grafo \(H\) è un \textbf{minor} di \(G\), denotato con \(H \leq_M G\), se \(H\)
+può essere ottenuto da un sottografo di \(G\) attraverso una serie di
+contrazioni di un arco (o con rimozione di un arco o un vertice).
+
+Una famiglia di grafi \(F\) è \textbf{minor-closed}, se per ogni grafo \(G \in F\) e
+per ogni minore \(H\) di \(G\), abbiamo che \(H \in F\).
+
+\(\forall k\) fissato, la famiglia di grafi con vertex cover
+number al più \(k\) è minor-closed.
+
+\begin{enumerate}[leftmargin=*]
+    \item Qualsiasi famiglia infinita di grafi contiene due elementi tali che uno è un minore dell’altro.
+    
+    Per ogni fissata famiglia minor-closed \(F\), esiste un insieme finito di grafi \(Forb(F)\), detta famiglia dei \textbf{minimal forbidden minors}, tale che qualsiasi grafo \(G\) appartiene a \(F\) se e solo se non esiste un minor di \(G\) che corrisponde (a meno di un isomorfismo) a un membro di \(Forb(F)\).
+    \item Esiste una funzione calcolabile \(f\) e un algoritmo \(A\), tali che per una data coppia di grafi\\\(H=(V’,E’)\) e \(G=(V,E)\), \(A\) decide se \(H \leq_M G\) in tempo \(f(|H|)\cdot |V|^3\).
+    \item Sia \(F\) una famiglia di grafi minor-closed, esiste una costante \(c_F\) che dipende soltanto da \(F\), tale che per ogni grafo \(G\) con \(n\) vertici, possiamo decidere se \(G\in F\) in tempo al più \(c_F\cdot n^3\).
+    \item Per ogni fissato \(k\), esiste un algoritmo che risolve \codeword{VERTEX-COVER} in tempo \(c_k\cdot n^3\) dove \(c_k=f(k)\) per una qualche funzione calcolabile \(f\).
+\end{enumerate}
+L'ultimo teorema non ci dimostra che \codeword{VERTEX-COVER} è FPT, 
+ci dice però che esiste una collezione di algoritmi FPT per
+il nostro problema, uno per ogni valore di \(k\).
+
+Un problema parametrizzato L è detto \textbf{nonuniformly FPT}
+se esiste una terna \(((A_K)_{K\in \mathbb{N}},f,c\) dove:
+\begin{itemize}[leftmargin=*]
+    \item \(f:\mathbb{N} \rightarrow \mathbb{N}\) è una funzione calcolabile;
+    \item \(c\) è una costante;
+    \item \((A_K)_{K\in \mathbb{N}}\) è una collezione di algoritmi, tale che
+    \(\forall k \in \mathbb{N}\), \(A_k\) decide se una data istanza \((x,k)\)
+    appartiene ad \(L\) in un tempo limitato da \(f(k)\codt |x|^c\).
+\end{itemize}
+\end{textbox}
+
+\begin{textbox}{Treewidth}
+Se un grafo ha un valore di treewidth
+piccolo, allora possiamo applicare un approccio di
+programmazione dinamica simile a quello usato per gli alberi.
+
+Una \textbf{tree decomposition} di \(G=(V,E)\) è una coppia \(\tau=(T, \{X_t\}_{t\in T})\) tale che:
+\begin{itemize}[leftmargin=*]
+    \item \(T\) è un albero e ciascun nodo \(t\in T\) è associato con un un insieme \(X_t \subseteq V\) chiamato \textbf{bag};
+    \item \(\bigcup_{t\in T}X_t=V\) (per ciascun vertice di G esiste almeno una bag che lo contiene);
+    \item \(\forall (u,v) \in E\), \(\exists\) un nodo \(t\in T\) tale che \(\{u,v\} \subseteq X_t\)
+    (per ciascun arco di G esiste almeno una bag che contiene entrambi i suoi estremi);
+    \item \(\forall u \in V\), \(T_u = \{t\in T: u\in X_t\}\) induce un sottoalbero connesso di \(T\).
+\end{itemize}
+
+La \textbf{width} di \(\tau=(T, \{X_t\}_{t\in T})\) è pari alla dimensione della bag più
+grande meno uno, ovvero:\\\(width(\tau) = max_{t\in T} |X_t|-1\).
+
+La \textbf{treewidth} di un grafo \(G\), denotata \(tw(G)\), è la più piccola width
+possibile per una sua tree decomposition.
+\end{textbox}
+
+
+
+\begin{textbox}{Teoremi di Robertson-Seymour}
+Un grafo \(H\) è un \textbf{minor} di \(G\), denotato con \(H \leq_M G\), se \(H\)
+può essere ottenuto da un sottografo di \(G\) attraverso una serie di
+contrazioni di un arco (o con rimozione di un arco o un vertice).
+
+Una famiglia di grafi \(F\) è \textbf{minor-closed}, se per ogni grafo \(G \in F\) e
+per ogni minore \(H\) di \(G\), abbiamo che \(H \in F\).
+
+\(\forall k\) fissato, la famiglia di grafi con vertex cover
+number al più \(k\) è minor-closed.
+
+\begin{enumerate}[leftmargin=*]
+    \item Qualsiasi famiglia infinita di grafi contiene due elementi tali che uno è un minore dell’altro.
+    
+    Per ogni fissata famiglia minor-closed \(F\), esiste un insieme finito di grafi \(Forb(F)\), detta famiglia dei \textbf{minimal forbidden minors}, tale che qualsiasi grafo \(G\) appartiene a \(F\) se e solo se non esiste un minor di \(G\) che corrisponde (a meno di un isomorfismo) a un membro di \(Forb(F)\).
+    \item Esiste una funzione calcolabile \(f\) e un algoritmo \(A\), tali che per una data coppia di grafi\\\(H=(V’,E’)\) e \(G=(V,E)\), \(A\) decide se \(H \leq_M G\) in tempo \(f(|H|)\cdot |V|^3\).
+    \item Sia \(F\) una famiglia di grafi minor-closed, esiste una costante \(c_F\) che dipende soltanto da \(F\), tale che per ogni grafo \(G\) con \(n\) vertici, possiamo decidere se \(G\in F\) in tempo al più \(c_F\cdot n^3\).
+    \item Per ogni fissato \(k\), esiste un algoritmo che risolve \codeword{VERTEX-COVER} in tempo \(c_k\cdot n^3\) dove \(c_k=f(k)\) per una qualche funzione calcolabile \(f\).
+\end{enumerate}
+L'ultimo teorema non ci dimostra che \codeword{VERTEX-COVER} è FPT, 
+ci dice però che esiste una collezione di algoritmi FPT per
+il nostro problema, uno per ogni valore di \(k\).
+
+Un problema parametrizzato L è detto \textbf{nonuniformly FPT}
+se esiste una terna \(((A_K)_{K\in \mathbb{N}},f,c\) dove:
+\begin{itemize}[leftmargin=*]
+    \item \(f:\mathbb{N} \rightarrow \mathbb{N}\) è una funzione calcolabile;
+    \item \(c\) è una costante;
+    \item \((A_K)_{K\in \mathbb{N}}\) è una collezione di algoritmi, tale che
+    \(\forall k \in \mathbb{N}\), \(A_k\) decide se una data istanza \((x,k)\)
+    appartiene ad \(L\) in un tempo limitato da \(f(k)\codt |x|^c\).
+\end{itemize}
+\end{textbox}
+\begin{textbox}{Teoremi di Robertson-Seymour}
+Un grafo \(H\) è un \textbf{minor} di \(G\), denotato con \(H \leq_M G\), se \(H\)
+può essere ottenuto da un sottografo di \(G\) attraverso una serie di
+contrazioni di un arco (o con rimozione di un arco o un vertice).
+
+Una famiglia di grafi \(F\) è \textbf{minor-closed}, se per ogni grafo \(G \in F\) e
+per ogni minore \(H\) di \(G\), abbiamo che \(H \in F\).
+
+\(\forall k\) fissato, la famiglia di grafi con vertex cover
+number al più \(k\) è minor-closed.
+
+\begin{enumerate}[leftmargin=*]
+    \item Qualsiasi famiglia infinita di grafi contiene due elementi tali che uno è un minore dell’altro.
+    
+    Per ogni fissata famiglia minor-closed \(F\), esiste un insieme finito di grafi \(Forb(F)\), detta famiglia dei \textbf{minimal forbidden minors}, tale che qualsiasi grafo \(G\) appartiene a \(F\) se e solo se non esiste un minor di \(G\) che corrisponde (a meno di un isomorfismo) a un membro di \(Forb(F)\).
+    \item Esiste una funzione calcolabile \(f\) e un algoritmo \(A\), tali che per una data coppia di grafi\\\(H=(V’,E’)\) e \(G=(V,E)\), \(A\) decide se \(H \leq_M G\) in tempo \(f(|H|)\cdot |V|^3\).
+    \item Sia \(F\) una famiglia di grafi minor-closed, esiste una costante \(c_F\) che dipende soltanto da \(F\), tale che per ogni grafo \(G\) con \(n\) vertici, possiamo decidere se \(G\in F\) in tempo al più \(c_F\cdot n^3\).
+    \item Per ogni fissato \(k\), esiste un algoritmo che risolve \codeword{VERTEX-COVER} in tempo \(c_k\cdot n^3\) dove \(c_k=f(k)\) per una qualche funzione calcolabile \(f\).
+\end{enumerate}
+L'ultimo teorema non ci dimostra che \codeword{VERTEX-COVER} è FPT, 
+ci dice però che esiste una collezione di algoritmi FPT per
+il nostro problema, uno per ogni valore di \(k\).
+
+Un problema parametrizzato L è detto \textbf{nonuniformly FPT}
+se esiste una terna \(((A_K)_{K\in \mathbb{N}},f,c\) dove:
+\begin{itemize}[leftmargin=*]
+    \item \(f:\mathbb{N} \rightarrow \mathbb{N}\) è una funzione calcolabile;
+    \item \(c\) è una costante;
+    \item \((A_K)_{K\in \mathbb{N}}\) è una collezione di algoritmi, tale che
+    \(\forall k \in \mathbb{N}\), \(A_k\) decide se una data istanza \((x,k)\)
+    appartiene ad \(L\) in un tempo limitato da \(f(k)\codt |x|^c\).
+\end{itemize}
+\end{textbox}
 %\begin{textbox}{Subboxes}
 %---------------------------------------------
 %\begin{multibox}{2} % number of boxes in a row
