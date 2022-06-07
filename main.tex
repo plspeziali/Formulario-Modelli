@@ -6,6 +6,7 @@
 \usepackage{xcolor}
 \usepackage{listings}
 \usepackage{amsfonts} 
+\usepackage{amssymb}
 
 \usepackage{xparse}
 
@@ -406,13 +407,13 @@ ci dice però che esiste una collezione di algoritmi FPT per
 il nostro problema, uno per ogni valore di \(k\).
 
 Un problema parametrizzato L è detto \textbf{nonuniformly FPT}
-se esiste una terna \(((A_K)_{K\in \mathbb{N}},f,c\) dove:
+se esiste una terna \(((A_K)_{K\in \mathbb{N}},f,c)\) dove:
 \begin{itemize}[leftmargin=*]
     \item \(f:\mathbb{N} \rightarrow \mathbb{N}\) è una funzione calcolabile;
     \item \(c\) è una costante;
     \item \((A_K)_{K\in \mathbb{N}}\) è una collezione di algoritmi, tale che
     \(\forall k \in \mathbb{N}\), \(A_k\) decide se una data istanza \((x,k)\)
-    appartiene ad \(L\) in un tempo limitato da \(f(k)\codt |x|^c\).
+    appartiene ad \(L\) in un tempo limitato da \(f(k)\cdot |x|^c\).
 \end{itemize}
 \end{textbox}
 
@@ -435,76 +436,126 @@ grande meno uno, ovvero:\\\(width(\tau) = max_{t\in T} |X_t|-1\).
 
 La \textbf{treewidth} di un grafo \(G\), denotata \(tw(G)\), è la più piccola width
 possibile per una sua tree decomposition.
-\end{textbox}
 
-
-
-\begin{textbox}{Teoremi di Robertson-Seymour}
-Un grafo \(H\) è un \textbf{minor} di \(G\), denotato con \(H \leq_M G\), se \(H\)
-può essere ottenuto da un sottografo di \(G\) attraverso una serie di
-contrazioni di un arco (o con rimozione di un arco o un vertice).
-
-Una famiglia di grafi \(F\) è \textbf{minor-closed}, se per ogni grafo \(G \in F\) e
-per ogni minore \(H\) di \(G\), abbiamo che \(H \in F\).
-
-\(\forall k\) fissato, la famiglia di grafi con vertex cover
-number al più \(k\) è minor-closed.
-
-\begin{enumerate}[leftmargin=*]
-    \item Qualsiasi famiglia infinita di grafi contiene due elementi tali che uno è un minore dell’altro.
-    
-    Per ogni fissata famiglia minor-closed \(F\), esiste un insieme finito di grafi \(Forb(F)\), detta famiglia dei \textbf{minimal forbidden minors}, tale che qualsiasi grafo \(G\) appartiene a \(F\) se e solo se non esiste un minor di \(G\) che corrisponde (a meno di un isomorfismo) a un membro di \(Forb(F)\).
-    \item Esiste una funzione calcolabile \(f\) e un algoritmo \(A\), tali che per una data coppia di grafi\\\(H=(V’,E’)\) e \(G=(V,E)\), \(A\) decide se \(H \leq_M G\) in tempo \(f(|H|)\cdot |V|^3\).
-    \item Sia \(F\) una famiglia di grafi minor-closed, esiste una costante \(c_F\) che dipende soltanto da \(F\), tale che per ogni grafo \(G\) con \(n\) vertici, possiamo decidere se \(G\in F\) in tempo al più \(c_F\cdot n^3\).
-    \item Per ogni fissato \(k\), esiste un algoritmo che risolve \codeword{VERTEX-COVER} in tempo \(c_k\cdot n^3\) dove \(c_k=f(k)\) per una qualche funzione calcolabile \(f\).
-\end{enumerate}
-L'ultimo teorema non ci dimostra che \codeword{VERTEX-COVER} è FPT, 
-ci dice però che esiste una collezione di algoritmi FPT per
-il nostro problema, uno per ogni valore di \(k\).
-
-Un problema parametrizzato L è detto \textbf{nonuniformly FPT}
-se esiste una terna \(((A_K)_{K\in \mathbb{N}},f,c\) dove:
+Una tree decomposition \(\tau\) di \(G\) è \textbf{nice} se le seguenti
+proprietà valgono, assumendo che \(T\) è radicato nel nodo \(r\):
 \begin{itemize}[leftmargin=*]
-    \item \(f:\mathbb{N} \rightarrow \mathbb{N}\) è una funzione calcolabile;
-    \item \(c\) è una costante;
-    \item \((A_K)_{K\in \mathbb{N}}\) è una collezione di algoritmi, tale che
-    \(\forall k \in \mathbb{N}\), \(A_k\) decide se una data istanza \((x,k)\)
-    appartiene ad \(L\) in un tempo limitato da \(f(k)\codt |x|^c\).
+    \item \(X_r=\varnothing\) e \(X_l=\varnothing\) per ogni foglia l di T.
+    \item Per ogni nodo interno t di T, vale una delle seguenti proprietà:
+    \begin{enumerate}[leftmargin=*]
+        \item \textbf{Introduce node}: \(t\) ha solo un figlio \(t'\) in \(T\) tale che
+        \(X_t = X_{t'}\bigcup \{v\}\) per un qualche vertice \(v \notin X_{t'}\).
+        Diciamo che \(v\) è introdotto in \(t\).
+        \item \textbf{Forget node}: \(t\) ha solo un figlio \(t'\) in \(T\) tale che
+        \(X_t\bigcup \{w\} = X_{t'}\) per un qualche vertice \(w \in X_{t'}\).
+        Diciamo che \(w\) è dimenticato in \(t\).
+        \item \textbf{Join node}: \(t\) ha solo due figli \(t_1\) e \(t_1\) in \(T\) tale che
+        \(X_t = X_{t_1}= X_{t_2}\).
+    \end{enumerate}
 \end{itemize}
+
+Se un grafo \(G\) ammette una tree decomposition
+\(\tau\) con width al più \(k\), allora ammette anche una nice
+tree decomposition \(\tau'\) con width al più \(k\) e tale che
+\(|T’|\in O(k|V|)\).
+
+Inoltre, \(\tau'\) è calcolabile partendo da \(\tau\) in tempo \(O(k^2\cdot max(|T|, |V|)).\)
 \end{textbox}
-\begin{textbox}{Teoremi di Robertson-Seymour}
-Un grafo \(H\) è un \textbf{minor} di \(G\), denotato con \(H \leq_M G\), se \(H\)
-può essere ottenuto da un sottografo di \(G\) attraverso una serie di
-contrazioni di un arco (o con rimozione di un arco o un vertice).
 
-Una famiglia di grafi \(F\) è \textbf{minor-closed}, se per ogni grafo \(G \in F\) e
-per ogni minore \(H\) di \(G\), abbiamo che \(H \in F\).
 
-\(\forall k\) fissato, la famiglia di grafi con vertex cover
-number al più \(k\) è minor-closed.
 
+\begin{textbox}{Path decomposition}
+Una tree decomposition \(\mathrm{P}=(P, {X_t}_{t\in P})\) in cui \(P\) è un cammino,
+prende il nome di \textbf{path decomposition}.
+
+La \textbf{width} di \(\mathrm{P}=(P, {X_t}_{t\in P})\) è ancora pari alla dimensione della bag
+più grande meno uno, ovvero: \(width(\mathrm{P}) = max_{t\in P} |X_t|-1\).
+
+La \textbf{pathwidth} di un grafo \(G\), denotata \(pw(G)\), è la più piccola width
+possibile per una sua path decomposition.
+
+Per definizione, dato un qualsiasi grafo \(G\), abbiamo che \(tw(G)\leq pw(G)\).
+
+Una \textbf{nice path decomposition} può essere definita similmente a una nice
+tree decomposition, ignorando il concetto di join node.
+\end{textbox}
+
+\begin{textbox}{Calcolo della treewidth}
+Sia \(G\) un grafo con \(n\) vertici e sia \(k\)
+un intero positivo. Esiste un algoritmo che, in tempo \(O(k^{O(k^3)}\cdot n)\), o
+calcola una tree decomposition di \(G\) con width al più \(k\), oppure
+termina concludendo che \(tw(G)>k\).
+\end{textbox}
+
+
+\begin{textbox}{W-hierarchy}
+Uno strumento utile al fine di identificare quali sono i problemi
+intrattabili a parametro fissato (se quindi ammettono algoritmi FPT) è la \textbf{W-hierarchy}.
+
+Siano \(A, B\) due problemi parametrizzati. Una riduzione
+parametrizzata da \(A\) a \(B\) è un algoritmo che, per ogni data
+istanza \((x,k)\) di \(A\), fornisce in output un’istanza \((x’,k’)\) di \(B\) tale che:
 \begin{enumerate}[leftmargin=*]
-    \item Qualsiasi famiglia infinita di grafi contiene due elementi tali che uno è un minore dell’altro.
-    
-    Per ogni fissata famiglia minor-closed \(F\), esiste un insieme finito di grafi \(Forb(F)\), detta famiglia dei \textbf{minimal forbidden minors}, tale che qualsiasi grafo \(G\) appartiene a \(F\) se e solo se non esiste un minor di \(G\) che corrisponde (a meno di un isomorfismo) a un membro di \(Forb(F)\).
-    \item Esiste una funzione calcolabile \(f\) e un algoritmo \(A\), tali che per una data coppia di grafi\\\(H=(V’,E’)\) e \(G=(V,E)\), \(A\) decide se \(H \leq_M G\) in tempo \(f(|H|)\cdot |V|^3\).
-    \item Sia \(F\) una famiglia di grafi minor-closed, esiste una costante \(c_F\) che dipende soltanto da \(F\), tale che per ogni grafo \(G\) con \(n\) vertici, possiamo decidere se \(G\in F\) in tempo al più \(c_F\cdot n^3\).
-    \item Per ogni fissato \(k\), esiste un algoritmo che risolve \codeword{VERTEX-COVER} in tempo \(c_k\cdot n^3\) dove \(c_k=f(k)\) per una qualche funzione calcolabile \(f\).
+    \item \((x,k) \in A\) se e solo se \((x’,k’) \in B\), ovvero le due istanze sono equivalenti;
+    \item \(k’ \leq g(k)\), dove \(g\) è una qualche funzione;
+    \item \((x’,k’)\) è calcolata in tempo \(f(k)\cdot |x|^{O(1)}\), dove \(f\) è una qualche funzione calcolabile.
 \end{enumerate}
-L'ultimo teorema non ci dimostra che \codeword{VERTEX-COVER} è FPT, 
-ci dice però che esiste una collezione di algoritmi FPT per
-il nostro problema, uno per ogni valore di \(k\).
-
-Un problema parametrizzato L è detto \textbf{nonuniformly FPT}
-se esiste una terna \(((A_K)_{K\in \mathbb{N}},f,c\) dove:
-\begin{itemize}[leftmargin=*]
-    \item \(f:\mathbb{N} \rightarrow \mathbb{N}\) è una funzione calcolabile;
-    \item \(c\) è una costante;
-    \item \((A_K)_{K\in \mathbb{N}}\) è una collezione di algoritmi, tale che
-    \(\forall k \in \mathbb{N}\), \(A_k\) decide se una data istanza \((x,k)\)
-    appartiene ad \(L\) in un tempo limitato da \(f(k)\codt |x|^c\).
-\end{itemize}
+Se esiste una riduzione parametrizzata da \(A\) a \(B\), e \(B\) è un problema
+FPT, allora \(A\) è un problema FPT.
+Se ne esiste un'altra \(B\) a \(C\), altro problema paramterizzato, allora esiste una riduzione parametrizzata da \(A\) a \(C\).
 \end{textbox}
+
+\begin{textbox}{Circuiti Booleani}
+Un \textbf{circuito booleano} è un grafo diretto aciclico dove ogni nodo v
+è etichettato come segue:
+\begin{itemize}[leftmargin=*]
+    \item v è un nodo di \textbf{input} se il suo indegree è \(0\);
+    \item v è un nodo di \textbf{negazione} se il suo indegree è \(1\);
+    \item v è un nodo di \textbf{and} o di \textbf{or} se il suo indegree è almeno \(2\)
+\end{itemize}
+Inoltre esiste esattamente un nodo con outdegree \(0\) etichettato
+come nodo di \textbf{output}.
+
+Dato un circuito booleano, assegnando un valore in \(\{0,1\}\) a
+ciascun nodo di input e applicando gli operatori logici
+corrispondenti alle etichette dei nodi del circuito, otteniamo un
+valore in \(\{0,1\}\) per il nodo in output.
+Se tale valore è \(1\) allora diciamo che l’assegnamento in input
+soddisfa il circuito.
+Verificare se un dato assegnamento soddisfa o meno un
+circuito è fattibile in tempo polinomiale nella dimensione del
+circuito.
+
+Sappiamo che decidere se un circuito booleano ammette un
+assegnamento dell’input che lo soddisfa è
+NP-completo.
+Al fine di definire una versione parametrizzata del problema,
+definiamo il \textbf{peso di un assegnamento} come il numero di nodi
+in input a cui viene assegnato il valore \(1\).
+
+Dato un circuito booleano \(C\) e un intero \(k\), il \codeword{WEIGHTED-CIRCUIT-SAT}
+(\textbf{WCS}) è il problema di decidere se \(C\) ammette un
+assegnamento che lo soddisfa con peso al più \(k\).
+Se \(n\) è la dimensione del circuito, esistono \(O(n^k)\) possibili
+assegnamenti, ognuno verificabile in tempo polinomiale,
+pertanto WCS appartiene banalmente alla classe XP (si ritiene non sia FPT).
+
+La \textbf{depth} di un circuito booleano è pari alla lunghezza
+del più lungo cammino tra un nodo di input e il nodo di output.
+
+La \textbf{weft} di un circuito booleano è pari al numero massimo
+di nodi con indegree maggiore di \(2\) in un qualsiasi percorso da un
+nodo di input al nodo di output.
+
+Sia \(C_{t,d}\) la famiglia dei circuiti booleani con weft al più \(t\) e depth al
+più \(d\), e sia WSC[\(C_{t,d}\)] la restrizione del problema WSC a questa
+famiglia di circuiti.
+Per un dato \(t \geq 1\), la classe W[t] è costituita da tutti i problemi
+parametrizzati \(P\) per cui esiste una riduzione parametrizzata da \(P\) 
+a WSC[\(C_{t,d}\)] per un qualche fissato valore di \(d \geq 1\).
+\end{textbox}
+
+
 %\begin{textbox}{Subboxes}
 %---------------------------------------------
 %\begin{multibox}{2} % number of boxes in a row
