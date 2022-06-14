@@ -214,7 +214,7 @@ Per definire le varie tipologie di problemi useremo degli esempi che
 partono dal concetto di \textbf{Clique}.\\
 
 \begin{textbox}{Problemi di decisione}
-Un problema di decisione \(P_D\) è definito da:
+Un prob. di decisione \(P_D\) è definito da:
 \begin{itemize}[leftmargin=*]
     \item Un insieme di istanze \(I_{P_D}\);
     \item Un predicato \(\pi\): \(I_{P_D} \rightarrow\) \{vero, falso\}.
@@ -227,7 +227,7 @@ Un problema di decisione \(P_D\) è definito da:
 \end{textbox}
 
 \begin{textbox}{Problemi di ricerca}
-Un problema di decisione \(P_R\) è definito da:
+Un prob. di decisione \(P_R\) è definito da:
 \begin{itemize}[leftmargin=*]
     \item Un insieme di istanze \(I_{P_R}\);
     \item Un insieme di soluzioni candidate  \(S_{P_R}\);
@@ -253,7 +253,7 @@ istanza \(x\) e restituisce (se esiste) un elemento di\\
 Ogni problema di ricerca \(P_R\) ha un problema di decisione associato \(P_D\).\\
 
 \begin{textbox}{Problemi di enumerazione}
-Un problema di decisione \(P_E\) è definito da:
+Un prob. di decisione \(P_E\) è definito da:
 \begin{itemize}[leftmargin=*]
     \item Un insieme di istanze \(I_{P_E}\);
     \item Un insieme di soluzioni candidate  \(S_{P_E}\);
@@ -264,9 +264,9 @@ restituisce la cardinalità dell’insieme \(Sol(x)\).
 \end{textbox}
 
 \begin{textbox}{Problemi di ottimizzazione}
-Un problema di decisione \(P_E\) è definito da:
+Un prob. di decisione \(P_O\) è definito da:
 \begin{itemize}[leftmargin=*]
-    \item Un insieme di istanze \(I_{P_O}\), un insieme di soluzioni candidate  \(S{P_O}\), ed una proprietà di ammissibilità;
+    \item Un insieme di istanze \(I_{P_O}\), un insieme di soluzioni candidate  \(S_{P_O}\), ed una proprietà di ammissibilità;
     \item Una funzione di misura \\\(\mu:\,I_{P_O}\,\times S_{P_O}\,\rightarrow\,\mathbb{N} \)
     definita solo sulle coppie \((x,y)\) tali che \(y\,\in\,Sol(x)\);
     \item Un criterio di scelta \(c\,\in\,\)\{MIN, MAX\};
@@ -544,7 +544,7 @@ La \textbf{depth} di un circuito booleano è pari alla lunghezza
 del più lungo cammino tra un nodo di input e il nodo di output.
 
 La \textbf{weft} di un circuito booleano è pari al numero massimo
-di nodi con indegree maggiore di \(2\) in un qualsiasi percorso da un
+di nodi con indegree \( > 2\) in un qualsiasi percorso da un
 nodo di input al nodo di output.
 
 Sia \(C_{t,d}\) la famiglia dei circuiti booleani con weft al più \(t\) e depth al
@@ -554,7 +554,6 @@ Per un dato \(t \geq 1\), la classe W[t] è costituita da tutti i problemi
 parametrizzati \(P\) per cui esiste una riduzione parametrizzata da \(P\) 
 a WSC[\(C_{t,d}\)] per un qualche fissato valore di \(d \geq 1\).
 \end{textbox}
-
 
 %\begin{textbox}{Subboxes}
 %---------------------------------------------
